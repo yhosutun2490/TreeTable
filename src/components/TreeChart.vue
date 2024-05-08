@@ -1,9 +1,13 @@
 <template>
- <table class="w-[80%] h-auto border">
+ <table class="w-[100%] h-[100%]">
   <!--主要父元素-->
   <tr class="flex justify-center  w-[100%]">
     <td colspan=8 class="parent relative flex justify-center">
-      <div class="card w-[100px] h-[100px] bg-blue bg-slate-50">
+      <div 
+      class="card w-[100px] h-[100px] bg-blue bg-slate-50 hover:cursor-pointer"
+      @click="($event)=>blockOnfocus($event)"
+      @mouseleave.self="($event)=>removeFocus($event)"
+      >
         <div class="header">{{ props.data.title }}</div>
         <div class="body">{{ props.data.content}}</div>
         <div class="footer">按鈕</div>
@@ -30,6 +34,16 @@ const props = defineProps({
     default: ()=>{}
   }
 })
+function blockOnfocus(e) {
+  if (Array.from(e.target.classList).includes('card')) {
+    e.target.classList.add('focus-animate')
+  } else {
+    e.target.parentNode.classList.add('focus-animate')
+  }
+}
+function removeFocus(e) {
+  e.target.classList.remove('focus-animate')
+}
 console.log("props",props)
 </script>
 
@@ -81,5 +95,9 @@ console.log("props",props)
   border-color: rgb(159,186,202) rgb(159,186,202) transparent transparent;
   border-radius: 0 6px 0 0;
   transform: translate3d(1px,0,0);
+}
+.focus-animate {
+  border: 2px solid gold;
+
 }
 </style>
